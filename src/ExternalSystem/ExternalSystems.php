@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Mtk3d\Gearbox;
+namespace Mtk3d\Gearbox\ExternalSystems;
 
 
 interface ExternalSystems

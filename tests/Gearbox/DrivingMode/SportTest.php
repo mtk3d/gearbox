@@ -3,6 +3,7 @@
 namespace Mtk3d\Gearbox\Tests\Gearbox\DrivingMode;
 
 use Mtk3d\Gearbox\Gearbox\DrivingMode\Sport;
+use Mtk3d\Gearbox\Gearbox\ExternalSystemsInterface;
 use Mtk3d\Gearbox\Gearbox\GearboxInterface;
 use Mtk3d\Gearbox\Gearbox\InputState;
 use Mtk3d\Gearbox\Gearbox\Pedal\BreakPedal;
@@ -102,8 +103,8 @@ class SportTest extends TestCase
         //when
         $should = $this->sport->shouldShiftDown($inputStateShould);
         $shouldNot = $this->sport->shouldShiftDown($inputStateShouldNot);
-        $shouldNotTwoGears = $this->sport->shouldShiftDownTwoGears($inputStateShould);
-        $shouldNotTwoGearsToo = $this->sport->shouldShiftDownTwoGears($inputStateShouldNot);
+        $shouldNotTwoGears = $this->sport->shouldShiftDownTwoGears(BreakPedal::of(0.8), Rpm::of(4900));
+        $shouldNotTwoGearsToo = $this->sport->shouldShiftDownTwoGears(BreakPedal::of(0.8), Rpm::of(5100));
         //then
         $this->assertTrue($should);
         $this->assertFalse($shouldNot);
@@ -121,7 +122,7 @@ class SportTest extends TestCase
         );
         //when
         $should = $this->sport->shouldShiftDown($inputState);
-        $twoGears = $this->sport->shouldShiftDownTwoGears($inputState);
+        $twoGears = $this->sport->shouldShiftDownTwoGears(BreakPedal::of(0.95), Rpm::of(4900));
         //then
         $this->assertTrue($should);
         $this->assertTrue($twoGears);
@@ -130,16 +131,12 @@ class SportTest extends TestCase
     public function testChangeTwoGearsInKickdown()
     {
         //given
-        $inputState = InputState::of(
-            GasPedal::of(0),
-            BreakPedal::of(0.95),
-            Rpm::of(4900)
-        );
+        $externalSystems = $this->createMock(ExternalSystemsInterface::class);
         $gearbox = $this->createMock(GearboxInterface::class);
         //than
         $gearbox->expects($this->exactly(2))
             ->method('shiftDown');
         //when
-        $this->sport->handle($inputState, $gearbox);
+        $this->sport->handle(GasPedal::of(0), BreakPedal::of(0.95), $gearbox, $externalSystems);
     }
 }

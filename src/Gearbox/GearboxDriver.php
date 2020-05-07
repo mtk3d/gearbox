@@ -5,21 +5,19 @@ namespace Mtk3d\Gearbox\Gearbox;
 
 
 use Mtk3d\Gearbox\Common\Exception\InvalidArgumentException;
-use Mtk3d\Gearbox\ExternalSystems;
 use Mtk3d\Gearbox\Gearbox\DrivingMode\Comfort;
 use Mtk3d\Gearbox\Gearbox\DrivingMode\DrivingMode;
 use Mtk3d\Gearbox\Gearbox\Exception\ActionSequenceException;
 use Mtk3d\Gearbox\Gearbox\Pedal\GasPedal;
 use Mtk3d\Gearbox\Gearbox\Pedal\BreakPedal;
 use Mtk3d\Gearbox\Gearbox\Pedal\Specification\CompletelyPressedSpecification;
-use Mtk3d\Gearbox\Gearbox\Rpm\Rpm;
 
 class GearboxDriver
 {
     /**
-     * @var ExternalSystems
+     * @var ExternalSystemsInterface
      */
-    private ExternalSystems $externalSystems;
+    private ExternalSystemsInterface $externalSystems;
     /**
      * @var GearboxInterface
      */
@@ -40,27 +38,47 @@ class GearboxDriver
     /**
      * GearboxDriver constructor.
      * @param GearboxInterface $gearbox
-     * @param ExternalSystems $externalSystems
+     * @param ExternalSystemsInterface $externalSystems
+     * @param DrivingMode $drivingMode
      * @throws InvalidArgumentException
      */
-    public function __construct(GearboxInterface $gearbox, ExternalSystems $externalSystems)
-    {
+    public function __construct(
+        GearboxInterface $gearbox,
+        ExternalSystemsInterface $externalSystems,
+        DrivingMode $drivingMode
+    ) {
         $this->externalSystems = $externalSystems;
         $this->gearbox = $gearbox;
-        $this->drivingMode = new Comfort();
+        $this->drivingMode = $drivingMode;
         $this->break = BreakPedal::of(0);
     }
 
+    /**
+     * @param GearboxInterface $gearbox
+     * @param ExternalSystemsInterface $externalSystems
+     * @return GearboxDriver
+     * @throws InvalidArgumentException
+     */
+    public static function init(
+        GearboxInterface $gearbox,
+        ExternalSystemsInterface $externalSystems
+    ) {
+        return new GearboxDriver($gearbox, $externalSystems, new Comfort());
+    }
+
+    /**
+     * @param GasPedal $gas
+     * @param BreakPedal $break
+     */
     public function handle(GasPedal $gas, BreakPedal $break): void
     {
         $this->break = $break;
-        $currentRpm = Rpm::of($this->externalSystems->getCurrentRpm());
-
-        $inputState = InputState::of($gas, $break, $currentRpm);
-
-        $this->drivingMode->handle($inputState, $this->gearbox);
+        $this->drivingMode->handle($gas, $break, $this->gearbox, $this->externalSystems);
     }
 
+    /**
+     * @param DrivingMode $drivingMode
+     */
     public function changeDrivingMode(DrivingMode $drivingMode): void
     {
         $this->drivingMode = $drivingMode;

@@ -3,11 +3,15 @@
 namespace Mtk3d\Gearbox\Gearbox\DrivingMode;
 
 
+use Mtk3d\Gearbox\Gearbox\ExternalSystemsInterface;
 use Mtk3d\Gearbox\Gearbox\GearboxInterface;
 use Mtk3d\Gearbox\Gearbox\InputState;
+use Mtk3d\Gearbox\Gearbox\Pedal\BreakPedal;
+use Mtk3d\Gearbox\Gearbox\Pedal\GasPedal;
 use Mtk3d\Gearbox\Gearbox\Pedal\Specification\PressedSpecification;
 use Mtk3d\Gearbox\Gearbox\Pedal\Specification\Sport\KickdownInSportSpecification;
 use Mtk3d\Gearbox\Gearbox\Pedal\Specification\Sport\StrongKickdownInSportSpecification;
+use Mtk3d\Gearbox\Gearbox\Rpm\Rpm;
 use Mtk3d\Gearbox\Gearbox\Rpm\Specification\Sport\DownshiftInSportSpecification;
 use Mtk3d\Gearbox\Gearbox\Rpm\Specification\Sport\DownshiftOnBrakeInSportSpecification;
 use Mtk3d\Gearbox\Gearbox\Rpm\Specification\Sport\DownshiftOnStrongKickdownInSportSpecification;
@@ -65,12 +69,12 @@ class Sport extends DrivingMode
         $this->downShiftOnStrongKickdownSpecification = new DownshiftOnStrongKickdownInSportSpecification();
     }
 
-    public function handle(InputState $inputState, GearboxInterface $gearbox): void
+    public function handle(GasPedal $gas, BreakPedal $break, GearboxInterface $gearbox, ExternalSystemsInterface $externalSystems): void
     {
-        if ($this->shouldShiftDownTwoGears($inputState)) {
+        if ($this->shouldShiftDownTwoGears($break, $externalSystems->getCurrentRpm())) {
             $gearbox->shiftDown(); //one more time
         }
-        parent::handle($inputState, $gearbox);
+        parent::handle($gas, $break, $gearbox, $externalSystems);
     }
 
     public function shouldShiftDown(InputState $inputState): bool
@@ -95,9 +99,9 @@ class Sport extends DrivingMode
         return $this->upShiftSpecification->isSatisfiedBy($inputState->getCurrentRpm());
     }
 
-    public function shouldShiftDownTwoGears(InputState $inputState)
+    public function shouldShiftDownTwoGears(BreakPedal $break, Rpm $currentRpm)
     {
-        return $this->strongKickdownSpecification->isSatisfiedBy($inputState->getBreak())
-            && $this->downShiftOnStrongKickdownSpecification->isSatisfiedBy($inputState->getCurrentRpm());
+        return $this->strongKickdownSpecification->isSatisfiedBy($break)
+            && $this->downShiftOnStrongKickdownSpecification->isSatisfiedBy($currentRpm);
     }
 }

@@ -2,14 +2,15 @@
 
 namespace Mtk3d\Gearbox\Tests\Gearbox;
 
-use Mtk3d\Gearbox\ExternalSystems;
 use Mtk3d\Gearbox\Gearbox\DrivingMode\Sport;
 use Mtk3d\Gearbox\Gearbox\Exception\ActionSequenceException;
+use Mtk3d\Gearbox\Gearbox\ExternalSystemsInterface;
 use Mtk3d\Gearbox\Gearbox\GearboxDriver;
 use Mtk3d\Gearbox\Gearbox\GearboxInterface;
 use Mtk3d\Gearbox\Gearbox\GearMode;
 use Mtk3d\Gearbox\Gearbox\Pedal\BreakPedal;
 use Mtk3d\Gearbox\Gearbox\Pedal\GasPedal;
+use Mtk3d\Gearbox\Gearbox\Rpm\Rpm;
 use PHPUnit\Framework\TestCase;
 
 class GearboxDriverTest extends TestCase
@@ -19,21 +20,21 @@ class GearboxDriverTest extends TestCase
      */
     private $gearbox;
     /**
-     * @var ExternalSystems|\PHPUnit\Framework\MockObject\MockObject
+     * @var ExternalSystemsInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     private $externalSystems;
 
     public function setUp(): void
     {
         $this->gearbox = $this->createMock(GearboxInterface::class);
-        $this->externalSystems = $this->createMock(ExternalSystems::class);
+        $this->externalSystems = $this->createMock(ExternalSystemsInterface::class);
     }
 
     public function testGearboxDriverHandler() {
         //given
-        $gearboxDriver = new GearboxDriver($this->gearbox, $this->externalSystems);
+        $gearboxDriver = GearboxDriver::init($this->gearbox, $this->externalSystems);
         //then
-        $this->externalSystems->method('getCurrentRpm')->willReturn((float)900);
+        $this->externalSystems->method('getCurrentRpm')->willReturn(Rpm::of(900));
         $this->gearbox->expects($this->once())->method('shiftDown');
         //when
         $gearboxDriver->handle(GasPedal::of(0.5), BreakPedal::of(0));
@@ -41,9 +42,9 @@ class GearboxDriverTest extends TestCase
 
     public function testChangeDrivingMode() {
         //given
-        $gearboxDriver = new GearboxDriver($this->gearbox, $this->externalSystems);
+        $gearboxDriver = GearboxDriver::init($this->gearbox, $this->externalSystems);
         //then
-        $this->externalSystems->method('getCurrentRpm')->willReturn((float)4900);
+        $this->externalSystems->method('getCurrentRpm')->willReturn(Rpm::of(4900));
         $this->gearbox->expects($this->exactly(2))->method('shiftDown');
         //when
         $gearboxDriver->changeDrivingMode(new Sport());
@@ -52,7 +53,7 @@ class GearboxDriverTest extends TestCase
 
     public function testChangeGearMode() {
         //given
-        $gearboxDriver = new GearboxDriver($this->gearbox, $this->externalSystems);
+        $gearboxDriver = GearboxDriver::init($this->gearbox, $this->externalSystems);
         $neutral = GearMode::neutral();
         //then
         $this->gearbox->expects($this->once())->method('changeGearMode')->with($neutral);
@@ -62,7 +63,7 @@ class GearboxDriverTest extends TestCase
 
     public function testFailedToChangeGearMode() {
         //given
-        $gearboxDriver = new GearboxDriver($this->gearbox, $this->externalSystems);
+        $gearboxDriver = GearboxDriver::init($this->gearbox, $this->externalSystems);
         $park = GearMode::park();
         //then
         $this->gearbox->expects($this->never())->method('changeGearMode');
