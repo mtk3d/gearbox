@@ -6,6 +6,7 @@ interface GearboxInterface
 {
 //    public function changeGearMode(GearMode $gearMode): void;
     public function currentGearModeEquals(GearMode $gearMode): bool;
+    public function changeGearMode(GearMode $gearMode): void;
     public function changeGear(Gear $gear): void;
 
     public function shiftDown(): void;

@@ -7,6 +7,10 @@ use Mtk3d\Gearbox\Gearbox\InputState;
 
 abstract class DrivingMode
 {
+    /**
+     * @param InputState $inputState
+     * @param GearboxInterface $gearbox
+     */
     public function handle(InputState $inputState, GearboxInterface $gearbox): void
     {
         if ($this->shouldShiftDown($inputState)) {
@@ -16,6 +20,15 @@ abstract class DrivingMode
         }
     }
 
+    /**
+     * @param InputState $inputState
+     * @return bool
+     */
     abstract public function shouldShiftDown(InputState $inputState): bool;
+
+    /**
+     * @param InputState $inputState
+     * @return bool
+     */
     abstract public function shouldShiftUp(InputState $inputState): bool;
 }

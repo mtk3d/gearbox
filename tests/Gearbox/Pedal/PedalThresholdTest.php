@@ -1,5 +1,7 @@
 <?php
 
+namespace Mtk3d\Gearbox\Gearbox\Tests\Pedal;
+
 use Mtk3d\Gearbox\Gearbox\Pedal\PedalThreshold;
 use PHPUnit\Framework\TestCase;
 use Mtk3d\Gearbox\Common\Exception\InvalidArgumentException;

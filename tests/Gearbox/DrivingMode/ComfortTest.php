@@ -1,13 +1,15 @@
 <?php
 
-namespace Mtk3d\Gearbox\Gearbox\DrivingMode;
+namespace Mtk3d\Gearbox\Tests\Gearbox\DrivingMode;
 
+use Mtk3d\Gearbox\Gearbox\DrivingMode\Comfort;
 use Mtk3d\Gearbox\Gearbox\InputState;
 use Mtk3d\Gearbox\Gearbox\Pedal\BreakPedal;
 use Mtk3d\Gearbox\Gearbox\Pedal\GasPedal;
 use Mtk3d\Gearbox\Gearbox\Rpm\Rpm;
 use PHPUnit\Framework\TestCase;
 
+//TODO: refactor tests to check gearbox function calls
 class ComfortTest extends TestCase
 {
     /**

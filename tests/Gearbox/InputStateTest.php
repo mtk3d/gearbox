@@ -1,7 +1,8 @@
 <?php
 
-namespace Mtk3d\Gearbox\Gearbox;
+namespace Mtk3d\Gearbox\Gearbox\Tests;
 
+use Mtk3d\Gearbox\Gearbox\InputState;
 use Mtk3d\Gearbox\Gearbox\Pedal\BreakPedal;
 use Mtk3d\Gearbox\Gearbox\Pedal\GasPedal;
 use Mtk3d\Gearbox\Gearbox\Rpm\Rpm;

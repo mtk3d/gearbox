@@ -1,5 +1,6 @@
 <?php
 
+namespace Mtk3d\Gearbox\Tests\Gearbox\Pedal;
 
 use Mtk3d\Gearbox\Gearbox\Pedal\BreakPedal;
 use PHPUnit\Framework\TestCase;

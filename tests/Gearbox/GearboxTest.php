@@ -1,7 +1,8 @@
 <?php
 
-namespace Mtk3d\Gearbox\Gearbox;
+namespace Mtk3d\Gearbox\Gearbox\Tests;
 
+use Mtk3d\Gearbox\Gearbox\Gearbox;
 use PHPUnit\Framework\TestCase;
 
 class GearboxTest extends TestCase

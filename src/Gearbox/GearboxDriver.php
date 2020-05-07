@@ -4,6 +4,7 @@
 namespace Mtk3d\Gearbox\Gearbox;
 
 
+use Mtk3d\Gearbox\Common\Exception\InvalidArgumentException;
 use Mtk3d\Gearbox\ExternalSystems;
 use Mtk3d\Gearbox\Gearbox\DrivingMode\Comfort;
 use Mtk3d\Gearbox\Gearbox\DrivingMode\DrivingMode;
@@ -40,12 +41,14 @@ class GearboxDriver
      * GearboxDriver constructor.
      * @param GearboxInterface $gearbox
      * @param ExternalSystems $externalSystems
+     * @throws InvalidArgumentException
      */
     public function __construct(GearboxInterface $gearbox, ExternalSystems $externalSystems)
     {
         $this->externalSystems = $externalSystems;
         $this->gearbox = $gearbox;
         $this->drivingMode = new Comfort();
+        $this->break = BreakPedal::of(0);
     }
 
     public function handle(GasPedal $gas, BreakPedal $break): void
@@ -64,46 +67,14 @@ class GearboxDriver
     }
 
     /**
-     * @throws ActionSequenceException
-     */
-    public function parking(): void
-    {
-        $this->changeGearMode(GearMode::park());
-    }
-
-    /**
-     * @throws ActionSequenceException
-     */
-    public function neutral(): void
-    {
-        $this->changeGearMode(GearMode::neutral());
-    }
-
-    /**
-     * @throws ActionSequenceException
-     */
-    public function drive(): void
-    {
-        $this->changeGearMode(GearMode::drive());
-    }
-
-    /**
-     * @throws ActionSequenceException
-     */
-    public function reverse(): void
-    {
-        $this->changeGearMode(GearMode::reverse());
-    }
-
-    /**
      * @param GearMode $gearMode
      * @throws ActionSequenceException
      */
-    private function changeGearMode(GearMode $gearMode): void
+    public function changeGearMode(GearMode $gearMode): void
     {
         if ($gearMode->equals(GearMode::park()) || $this->gearbox->currentGearModeEquals(GearMode::park())) {
             $completelyPressed = new CompletelyPressedSpecification();
-            if ($completelyPressed->isSatisfiedBy($this->break)) {
+            if (!$completelyPressed->isSatisfiedBy($this->break)) {
                 throw new ActionSequenceException("Break pedal must be pressed if change to, or from parking mode");
             }
         }

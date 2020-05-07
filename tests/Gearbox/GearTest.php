@@ -1,8 +1,9 @@
 <?php
 
-namespace Mtk3d\Gearbox\Gearbox;
+namespace Mtk3d\Gearbox\Gearbox\Tests;
 
 use Mtk3d\Gearbox\Common\Exception\InvalidArgumentException;
+use Mtk3d\Gearbox\Gearbox\Gear;
 use PHPUnit\Framework\TestCase;
 
 class GearTest extends TestCase
