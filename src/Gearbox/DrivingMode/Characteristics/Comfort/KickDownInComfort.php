@@ -1,14 +1,14 @@
 <?php
 
 
-namespace Mtk3d\Gearbox\Gearbox\DrivingMode\Characteristics\Sport;
+namespace Mtk3d\Gearbox\Gearbox\DrivingMode\Characteristics\Comfort;
 
 
 use Mtk3d\Gearbox\Gearbox\Pedal\Pedal;
 use Mtk3d\Gearbox\Gearbox\Pedal\PedalThreshold;
 use Mtk3d\Gearbox\Gearbox\Pedal\Specification\PressedAboveSpecification;
 
-class AcceleratesSlightlyInSport
+class KickDownInComfort
 {
     /**
      * @var PressedAboveSpecification

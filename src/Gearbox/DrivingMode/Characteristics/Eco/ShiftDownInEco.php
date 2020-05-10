@@ -1,25 +1,22 @@
 <?php
 
-namespace Mtk3d\Gearbox\Gearbox\DrivingMode\Characteristics\Sport;
+namespace Mtk3d\Gearbox\Gearbox\DrivingMode\Characteristics\Eco;
 
 use Mtk3d\Gearbox\Common\Specification;
-use Mtk3d\Gearbox\Gearbox\DrivingMode\Aggressiveness\AggressivenessInterface;
 use Mtk3d\Gearbox\Gearbox\Rpm\Rpm;
 use Mtk3d\Gearbox\Gearbox\Rpm\Specification\RpmBelowSpecification;
 
-class DownshiftOnKickdownInSportSpecification extends Specification
+class ShiftDownInEco extends Specification
 {
     /**
      * @var RpmBelowSpecification
      */
     private RpmBelowSpecification $rpmBelow;
 
-    public function __construct(AggressivenessInterface $aggressiveness)
+    public function __construct()
     {
-        $rpm = $aggressiveness->calculate(Rpm::of(5000));
-
         $this->rpmBelow =
-            new RpmBelowSpecification($rpm);
+            new RpmBelowSpecification(Rpm::of(1000));
     }
 
     public function isSatisfiedBy(Rpm $rpm): bool

@@ -4,13 +4,13 @@ namespace Mtk3d\Gearbox\Gearbox\DrivingMode;
 
 
 use Mtk3d\Gearbox\Gearbox\DrivingMode\Aggressiveness\AggressivenessInterface;
-use Mtk3d\Gearbox\Gearbox\DrivingMode\Characteristics\Sport\DownshiftInSportSpecification;
-use Mtk3d\Gearbox\Gearbox\DrivingMode\Characteristics\Sport\DownshiftOnBrakeInSportSpecification;
-use Mtk3d\Gearbox\Gearbox\DrivingMode\Characteristics\Sport\DownshiftOnKickdownInSportSpecification;
-use Mtk3d\Gearbox\Gearbox\DrivingMode\Characteristics\Sport\DownshiftOnStrongKickdownInSportSpecification;
-use Mtk3d\Gearbox\Gearbox\DrivingMode\Characteristics\Sport\KickdownInSportSpecification;
-use Mtk3d\Gearbox\Gearbox\DrivingMode\Characteristics\Sport\StrongKickdownInSportSpecification;
-use Mtk3d\Gearbox\Gearbox\DrivingMode\Characteristics\Sport\UpshiftInSportSpecification;
+use Mtk3d\Gearbox\Gearbox\DrivingMode\Characteristics\Sport\ShiftDownInSport;
+use Mtk3d\Gearbox\Gearbox\DrivingMode\Characteristics\Sport\ShiftDownOnBrakeInSport;
+use Mtk3d\Gearbox\Gearbox\DrivingMode\Characteristics\Sport\ShiftDownOnKickDownInSport;
+use Mtk3d\Gearbox\Gearbox\DrivingMode\Characteristics\Sport\ShiftDownOnStrongKickDownInSport;
+use Mtk3d\Gearbox\Gearbox\DrivingMode\Characteristics\Sport\KickDownInSport;
+use Mtk3d\Gearbox\Gearbox\DrivingMode\Characteristics\Sport\StrongKickDownInSport;
+use Mtk3d\Gearbox\Gearbox\DrivingMode\Characteristics\Sport\ShiftUpInSport;
 use Mtk3d\Gearbox\Gearbox\ExternalSystemsInterface;
 use Mtk3d\Gearbox\Gearbox\GearboxInterface;
 use Mtk3d\Gearbox\Gearbox\InputState;
@@ -24,48 +24,55 @@ class Sport extends DrivingMode
     /**
      * @var PressedSpecification
      */
-    private PressedSpecification $pressedSpecification;
+    private PressedSpecification $pressed;
     /**
-     * @var KickdownInSportSpecification
+     * @var KickDownInSport
      */
-    private KickdownInSportSpecification $kickDownSpecification;
+    private KickDownInSport $kickDown;
     /**
-     * @var DownshiftInSportSpecification
+     * @var ShiftDownInSport
      */
-    private DownshiftInSportSpecification $downShiftSpecification;
+    private ShiftDownInSport $shiftDown;
     /**
-     * @var DownshiftOnBrakeInSportSpecification
+     * @var ShiftDownOnBrakeInSport
      */
-    private DownshiftOnBrakeInSportSpecification $downShiftOnBreakSpecification;
+    private ShiftDownOnBrakeInSport $shiftDownOnBreak;
     /**
-     * @var UpshiftInSportSpecification
+     * @var ShiftUpInSport
      */
-    private UpshiftInSportSpecification $upShiftSpecification;
+    private ShiftUpInSport $shiftUp;
     /**
-     * @var StrongKickdownInSportSpecification
+     * @var StrongKickDownInSport
      */
-    private StrongKickdownInSportSpecification $strongKickdownSpecification;
+    private StrongKickDownInSport $strongKickDown;
     /**
-     * @var DownshiftOnKickdownInSportSpecification
+     * @var ShiftDownOnKickDownInSport
      */
-    private DownshiftOnKickdownInSportSpecification $downShiftInKickdownSpecification;
+    private ShiftDownOnKickDownInSport $shiftDownInKickDown;
     /**
-     * @var DownshiftOnStrongKickdownInSportSpecification
+     * @var ShiftDownOnStrongKickDownInSport
      */
-    private DownshiftOnStrongKickdownInSportSpecification $downShiftOnStrongKickdownSpecification;
+    private ShiftDownOnStrongKickDownInSport $shiftDownOnStrongKickDown;
 
+    /**
+     * Sport constructor.
+     * @param AggressivenessInterface $aggressiveness
+     */
     public function __construct(AggressivenessInterface $aggressiveness)
     {
-        $this->pressedSpecification = new PressedSpecification();
-        $this->kickDownSpecification = new KickdownInSportSpecification();
-        $this->downShiftSpecification = new DownshiftInSportSpecification($aggressiveness);
-        $this->downShiftOnBreakSpecification = new DownshiftOnBrakeInSportSpecification($aggressiveness);
-        $this->downShiftInKickdownSpecification = new DownshiftOnKickdownInSportSpecification($aggressiveness);
-        $this->upShiftSpecification = new UpshiftInSportSpecification($aggressiveness);
-        $this->strongKickdownSpecification = new StrongKickdownInSportSpecification();
-        $this->downShiftOnStrongKickdownSpecification = new DownshiftOnStrongKickdownInSportSpecification($aggressiveness);
+        $this->pressed = new PressedSpecification();
+        $this->kickDown = new KickDownInSport();
+        $this->shiftDown = new ShiftDownInSport($aggressiveness);
+        $this->shiftDownOnBreak = new ShiftDownOnBrakeInSport($aggressiveness);
+        $this->shiftDownInKickDown = new ShiftDownOnKickDownInSport($aggressiveness);
+        $this->shiftUp = new ShiftUpInSport($aggressiveness);
+        $this->strongKickDown = new StrongKickDownInSport();
+        $this->shiftDownOnStrongKickDown = new ShiftDownOnStrongKickDownInSport($aggressiveness);
     }
 
+    /**
+     * @inheritDoc
+     */
     public function handle(GasPedal $gas, BreakPedal $break, GearboxInterface $gearbox, ExternalSystemsInterface $externalSystems): void
     {
         if ($this->shouldShiftDownTwoGears($break, $externalSystems->getCurrentRpm())) {
@@ -74,31 +81,42 @@ class Sport extends DrivingMode
         parent::handle($gas, $break, $gearbox, $externalSystems);
     }
 
+    /**
+     * @inheritDoc
+     */
     public function shouldShiftDown(InputState $inputState): bool
     {
-        if ($this->strongKickdownSpecification->isSatisfiedBy($inputState->getBreak())) {
-            return $this->downShiftOnStrongKickdownSpecification->isSatisfiedBy($inputState->getCurrentRpm());
+        if ($this->strongKickDown->isSatisfiedBy($inputState->getBreak())) {
+            return $this->shiftDownOnStrongKickDown->isSatisfiedBy($inputState->getCurrentRpm());
         }
 
-        if ($this->kickDownSpecification->isSatisfiedBy($inputState->getBreak())) {
-            return $this->downShiftInKickdownSpecification->isSatisfiedBy($inputState->getCurrentRpm());
+        if ($this->kickDown->isSatisfiedBy($inputState->getBreak())) {
+            return $this->shiftDownInKickDown->isSatisfiedBy($inputState->getCurrentRpm());
         }
 
-        if ($this->pressedSpecification->isSatisfiedBy($inputState->getBreak())) {
-            return $this->downShiftOnBreakSpecification->isSatisfiedBy($inputState->getCurrentRpm());
+        if ($this->pressed->isSatisfiedBy($inputState->getBreak())) {
+            return $this->shiftDownOnBreak->isSatisfiedBy($inputState->getCurrentRpm());
         }
 
-        return $this->downShiftSpecification->isSatisfiedBy($inputState->getCurrentRpm());
+        return $this->shiftDown->isSatisfiedBy($inputState->getCurrentRpm());
     }
 
+    /**
+     * @inheritDoc
+     */
     public function shouldShiftUp(InputState $inputState): bool
     {
-        return $this->upShiftSpecification->isSatisfiedBy($inputState->getCurrentRpm());
+        return $this->shiftUp->isSatisfiedBy($inputState->getCurrentRpm());
     }
 
+    /**
+     * @param BreakPedal $break
+     * @param Rpm $currentRpm
+     * @return bool
+     */
     public function shouldShiftDownTwoGears(BreakPedal $break, Rpm $currentRpm)
     {
-        return $this->strongKickdownSpecification->isSatisfiedBy($break)
-            && $this->downShiftOnStrongKickdownSpecification->isSatisfiedBy($currentRpm);
+        return $this->strongKickDown->isSatisfiedBy($break)
+            && $this->shiftDownOnStrongKickDown->isSatisfiedBy($currentRpm);
     }
 }

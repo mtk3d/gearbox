@@ -3,11 +3,11 @@
 namespace Mtk3d\Gearbox\Gearbox\DrivingMode;
 
 use Mtk3d\Gearbox\Gearbox\DrivingMode\Aggressiveness\AggressivenessInterface;
-use Mtk3d\Gearbox\Gearbox\DrivingMode\Characteristics\Comfort\DownshiftInComfortSpecification;
-use Mtk3d\Gearbox\Gearbox\DrivingMode\Characteristics\Comfort\DownshiftOnBrakeInComfortSpecification;
-use Mtk3d\Gearbox\Gearbox\DrivingMode\Characteristics\Comfort\KickdownInComfortSpecification;
-use Mtk3d\Gearbox\Gearbox\DrivingMode\Characteristics\Comfort\UpshiftInComfortSpecification;
-use Mtk3d\Gearbox\Gearbox\DrivingMode\Characteristics\Comfort\UpshiftOnKickdownInComfortSpecification;
+use Mtk3d\Gearbox\Gearbox\DrivingMode\Characteristics\Comfort\ShiftDownInComfort;
+use Mtk3d\Gearbox\Gearbox\DrivingMode\Characteristics\Comfort\ShiftDownOnBrakeInComfort;
+use Mtk3d\Gearbox\Gearbox\DrivingMode\Characteristics\Comfort\KickDownInComfort;
+use Mtk3d\Gearbox\Gearbox\DrivingMode\Characteristics\Comfort\ShiftUpInComfort;
+use Mtk3d\Gearbox\Gearbox\DrivingMode\Characteristics\Comfort\ShiftUpOnKickDownInComfort;
 use Mtk3d\Gearbox\Gearbox\InputState;
 use Mtk3d\Gearbox\Gearbox\Pedal\Specification\PressedSpecification;
 
@@ -16,53 +16,63 @@ class Comfort extends DrivingMode
     /**
      * @var PressedSpecification
      */
-    private PressedSpecification $pressedSpecification;
+    private PressedSpecification $pressed;
     /**
-     * @var KickdownInComfortSpecification
+     * @var KickDownInComfort
      */
-    private KickdownInComfortSpecification $kickDownSpecification;
+    private KickDownInComfort $kickDown;
     /**
-     * @var DownshiftInComfortSpecification
+     * @var ShiftDownInComfort
      */
-    private DownshiftInComfortSpecification $downShiftSpecification;
+    private ShiftDownInComfort $shiftDown;
     /**
-     * @var DownshiftOnBrakeInComfortSpecification
+     * @var ShiftDownOnBrakeInComfort
      */
-    private DownshiftOnBrakeInComfortSpecification $downShiftOnBreakSpecification;
+    private ShiftDownOnBrakeInComfort $shiftDownOnBreak;
     /**
-     * @var UpshiftOnKickdownInComfortSpecification
+     * @var ShiftUpOnKickDownInComfort
      */
-    private UpshiftOnKickdownInComfortSpecification $upShiftInKickdownSpecification;
+    private ShiftUpOnKickDownInComfort $ShiftUpInKickDown;
     /**
-     * @var UpshiftInComfortSpecification
+     * @var ShiftUpInComfort
      */
-    private UpshiftInComfortSpecification $upShiftSpecification;
+    private ShiftUpInComfort $shiftUp;
 
+    /**
+     * Comfort constructor.
+     * @param AggressivenessInterface $aggressiveness
+     */
     public function __construct(AggressivenessInterface $aggressiveness)
     {
-        $this->pressedSpecification = new PressedSpecification();
-        $this->kickDownSpecification = new KickdownInComfortSpecification();
-        $this->downShiftSpecification = new DownshiftInComfortSpecification($aggressiveness);
-        $this->downShiftOnBreakSpecification = new DownshiftOnBrakeInComfortSpecification($aggressiveness);
-        $this->upShiftInKickdownSpecification = new UpshiftOnKickdownInComfortSpecification($aggressiveness);
-        $this->upShiftSpecification = new UpshiftInComfortSpecification($aggressiveness);
+        $this->pressed = new PressedSpecification();
+        $this->kickDown = new KickDownInComfort();
+        $this->shiftDown = new ShiftDownInComfort($aggressiveness);
+        $this->shiftDownOnBreak = new ShiftDownOnBrakeInComfort($aggressiveness);
+        $this->ShiftUpInKickDown = new ShiftUpOnKickDownInComfort($aggressiveness);
+        $this->shiftUp = new ShiftUpInComfort($aggressiveness);
     }
 
+    /**
+     * @inheritDoc
+     */
     public function shouldShiftDown(InputState $inputState): bool
     {
-        if ($this->pressedSpecification->isSatisfiedBy($inputState->getBreak())) {
-            return $this->downShiftOnBreakSpecification->isSatisfiedBy($inputState->getCurrentRpm());
+        if ($this->pressed->isSatisfiedBy($inputState->getBreak())) {
+            return $this->shiftDownOnBreak->isSatisfiedBy($inputState->getCurrentRpm());
         }
 
-        return $this->downShiftSpecification->isSatisfiedBy($inputState->getCurrentRpm());
+        return $this->shiftDown->isSatisfiedBy($inputState->getCurrentRpm());
     }
 
+    /**
+     * @inheritDoc
+     */
     public function shouldShiftUp(InputState $inputState): bool
     {
-        if ($this->kickDownSpecification->isSatisfiedBy($inputState->getGas())) {
-            return $this->upShiftInKickdownSpecification->isSatisfiedBy($inputState->getCurrentRpm());
+        if ($this->kickDown->isSatisfiedBy($inputState->getGas())) {
+            return $this->ShiftUpInKickDown->isSatisfiedBy($inputState->getCurrentRpm());
         }
 
-        return $this->upShiftSpecification->isSatisfiedBy($inputState->getCurrentRpm());
+        return $this->shiftUp->isSatisfiedBy($inputState->getCurrentRpm());
     }
 }

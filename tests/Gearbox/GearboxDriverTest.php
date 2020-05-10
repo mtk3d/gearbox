@@ -41,6 +41,16 @@ class GearboxDriverTest extends TestCase
         $gearboxDriver->handle(GasPedal::of(0.5), BreakPedal::of(0));
     }
 
+    public function testGearboxDriverHandlerShiftUp() {
+        //given
+        $gearboxDriver = GearboxDriver::init($this->gearbox, $this->externalSystems);
+        //then
+        $this->externalSystems->method('getCurrentRpm')->willReturn(Rpm::of(2600));
+        $this->gearbox->expects($this->once())->method('shiftUp');
+        //when
+        $gearboxDriver->handle(GasPedal::of(0.5), BreakPedal::of(0));
+    }
+
     public function testChangeDrivingMode() {
         //given
         $gearboxDriver = GearboxDriver::init($this->gearbox, $this->externalSystems);

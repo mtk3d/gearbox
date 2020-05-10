@@ -7,7 +7,7 @@ use Mtk3d\Gearbox\Gearbox\DrivingMode\Aggressiveness\AggressivenessInterface;
 use Mtk3d\Gearbox\Gearbox\Rpm\Rpm;
 use Mtk3d\Gearbox\Gearbox\Rpm\Specification\RpmAboveSpecification;
 
-class UpshiftInComfortSpecification extends Specification
+class ShiftUpOnKickDownInComfort extends Specification
 {
     /**
      * @var RpmAboveSpecification
@@ -16,7 +16,7 @@ class UpshiftInComfortSpecification extends Specification
 
     public function __construct(AggressivenessInterface $aggressiveness)
     {
-        $rpm = $aggressiveness->calculate(Rpm::of(2500));
+        $rpm = $aggressiveness->calculate(Rpm::of(4500));
 
         $this->rpmAbove =
             new RpmAboveSpecification($rpm);

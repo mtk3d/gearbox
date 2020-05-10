@@ -8,7 +8,7 @@ use Mtk3d\Gearbox\Gearbox\Pedal\Pedal;
 use Mtk3d\Gearbox\Gearbox\Pedal\PedalThreshold;
 use Mtk3d\Gearbox\Gearbox\Pedal\Specification\PressedAboveSpecification;
 
-class KickdownInSportSpecification
+class StrongKickDownInSport
 {
     /**
      * @var PressedAboveSpecification
@@ -18,7 +18,7 @@ class KickdownInSportSpecification
     public function __construct()
     {
         $this->pressedAbove =
-            new PressedAboveSpecification(PedalThreshold::of(0.7));
+            new PressedAboveSpecification(PedalThreshold::of(0.9));
     }
 
     public function isSatisfiedBy(Pedal $pedal): bool

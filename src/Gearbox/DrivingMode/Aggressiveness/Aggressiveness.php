@@ -4,17 +4,26 @@ namespace Mtk3d\Gearbox\Gearbox\DrivingMode\Aggressiveness;
 
 class Aggressiveness
 {
-    public static function first(): AggressivenessInterface
+    /**
+     * @return First
+     */
+    public static function first(): First
     {
         return new First();
     }
 
-    public static function second(): AggressivenessInterface
+    /**
+     * @return Second
+     */
+    public static function second(): Second
     {
         return new Second();
     }
 
-    public static function third(): AggressivenessInterface
+    /**
+     * @return Third
+     */
+    public static function third(): Third
     {
         return new Third();
     }

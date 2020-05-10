@@ -4,6 +4,7 @@ namespace Mtk3d\Gearbox\Tests\Gearbox\DrivingMode;
 
 use Mtk3d\Gearbox\Gearbox\DrivingMode\Aggressiveness\Aggressiveness;
 use Mtk3d\Gearbox\Gearbox\DrivingMode\Comfort;
+use Mtk3d\Gearbox\Gearbox\DrivingMode\Sport;
 use Mtk3d\Gearbox\Gearbox\InputState;
 use Mtk3d\Gearbox\Gearbox\Pedal\BreakPedal;
 use Mtk3d\Gearbox\Gearbox\Pedal\GasPedal;

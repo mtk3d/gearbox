@@ -6,6 +6,9 @@ use Mtk3d\Gearbox\Gearbox\Rpm\Rpm;
 
 class Second implements AggressivenessInterface
 {
+    /**
+     * @inheritDoc
+     */
     public function calculate(Rpm $rpm): Rpm
     {
         return Rpm::of($rpm->value() * 120/100);

@@ -1,13 +1,13 @@
 <?php
 
-namespace Mtk3d\Gearbox\Gearbox\DrivingMode\Characteristics\Sport;
+namespace Mtk3d\Gearbox\Gearbox\DrivingMode\Characteristics\Comfort;
 
 use Mtk3d\Gearbox\Common\Specification;
 use Mtk3d\Gearbox\Gearbox\DrivingMode\Aggressiveness\AggressivenessInterface;
 use Mtk3d\Gearbox\Gearbox\Rpm\Rpm;
 use Mtk3d\Gearbox\Gearbox\Rpm\Specification\RpmBelowSpecification;
 
-class DownshiftInSportSpecification extends Specification
+class ShiftDownInComfort extends Specification
 {
     /**
      * @var RpmBelowSpecification
@@ -16,7 +16,7 @@ class DownshiftInSportSpecification extends Specification
 
     public function __construct(AggressivenessInterface $aggressiveness)
     {
-        $rpm = $aggressiveness->calculate(Rpm::of(1500));
+        $rpm = $aggressiveness->calculate(Rpm::of(1000));
 
         $this->rpmBelow =
             new RpmBelowSpecification($rpm);

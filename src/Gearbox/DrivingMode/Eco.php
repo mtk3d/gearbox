@@ -4,9 +4,9 @@ namespace Mtk3d\Gearbox\Gearbox\DrivingMode;
 
 
 use Mtk3d\Gearbox\Gearbox\DrivingMode\Aggressiveness\AggressivenessInterface;
-use Mtk3d\Gearbox\Gearbox\DrivingMode\Characteristics\Eco\DownshiftInEcoSpecification;
-use Mtk3d\Gearbox\Gearbox\DrivingMode\Characteristics\Eco\DownshiftOnBrakeInEcoSpecification;
-use Mtk3d\Gearbox\Gearbox\DrivingMode\Characteristics\Eco\UpshiftInEcoSpecification;
+use Mtk3d\Gearbox\Gearbox\DrivingMode\Characteristics\Eco\ShiftDownInEco;
+use Mtk3d\Gearbox\Gearbox\DrivingMode\Characteristics\Eco\ShiftDownOnBrakeInEco;
+use Mtk3d\Gearbox\Gearbox\DrivingMode\Characteristics\Eco\ShiftUpInEco;
 use Mtk3d\Gearbox\Gearbox\InputState;
 use Mtk3d\Gearbox\Gearbox\Pedal\Specification\PressedSpecification;
 
@@ -15,39 +15,49 @@ class Eco extends DrivingMode
     /**
      * @var PressedSpecification
      */
-    private PressedSpecification $pressedSpecification;
+    private PressedSpecification $pressed;
     /**
-     * @var DownshiftInEcoSpecification
+     * @var ShiftDownInEco
      */
-    private DownshiftInEcoSpecification $downShiftSpecification;
+    private ShiftDownInEco $shiftDown;
     /**
-     * @var DownshiftOnBrakeInEcoSpecification
+     * @var ShiftDownOnBrakeInEco
      */
-    private DownshiftOnBrakeInEcoSpecification $downShiftOnBreakSpecification;
+    private ShiftDownOnBrakeInEco $shiftDownOnBreak;
     /**
-     * @var UpshiftInEcoSpecification
+     * @var ShiftUpInEco
      */
-    private UpshiftInEcoSpecification $upShiftSpecification;
+    private ShiftUpInEco $shiftUp;
 
+    /**
+     * Eco constructor.
+     * @param AggressivenessInterface $aggressiveness
+     */
     public function __construct(AggressivenessInterface $aggressiveness)
     {
-        $this->pressedSpecification = new PressedSpecification();
-        $this->downShiftSpecification = new DownshiftInEcoSpecification();
-        $this->downShiftOnBreakSpecification = new DownshiftOnBrakeInEcoSpecification();
-        $this->upShiftSpecification = new UpshiftInEcoSpecification();
+        $this->pressed = new PressedSpecification();
+        $this->shiftDown = new ShiftDownInEco();
+        $this->shiftDownOnBreak = new ShiftDownOnBrakeInEco();
+        $this->shiftUp = new ShiftUpInEco();
     }
 
+    /**
+     * @inheritDoc
+     */
     public function shouldShiftDown(InputState $inputState): bool
     {
-        if ($this->pressedSpecification->isSatisfiedBy($inputState->getBreak())) {
-            return $this->downShiftOnBreakSpecification->isSatisfiedBy($inputState->getCurrentRpm());
+        if ($this->pressed->isSatisfiedBy($inputState->getBreak())) {
+            return $this->shiftDownOnBreak->isSatisfiedBy($inputState->getCurrentRpm());
         }
 
-        return $this->downShiftSpecification->isSatisfiedBy($inputState->getCurrentRpm());
+        return $this->shiftDown->isSatisfiedBy($inputState->getCurrentRpm());
     }
 
+    /**
+     * @inheritDoc
+     */
     public function shouldShiftUp(InputState $inputState): bool
     {
-        return $this->upShiftSpecification->isSatisfiedBy($inputState->getCurrentRpm());
+        return $this->shiftUp->isSatisfiedBy($inputState->getCurrentRpm());
     }
 }
