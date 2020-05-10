@@ -3,11 +3,11 @@
 namespace Mtk3d\Gearbox\Gearbox\DrivingMode;
 
 
+use Mtk3d\Gearbox\Gearbox\DrivingMode\Characteristics\Eco\DownshiftInEcoSpecification;
+use Mtk3d\Gearbox\Gearbox\DrivingMode\Characteristics\Eco\DownshiftOnBrakeInEcoSpecification;
+use Mtk3d\Gearbox\Gearbox\DrivingMode\Characteristics\Eco\UpshiftInEcoSpecification;
 use Mtk3d\Gearbox\Gearbox\InputState;
 use Mtk3d\Gearbox\Gearbox\Pedal\Specification\PressedSpecification;
-use Mtk3d\Gearbox\Gearbox\Rpm\Specification\Eco\DownshiftInEcoSpecification;
-use Mtk3d\Gearbox\Gearbox\Rpm\Specification\Eco\DownshiftOnBrakeInEcoSpecification;
-use Mtk3d\Gearbox\Gearbox\Rpm\Specification\Eco\UpshiftInEcoSpecification;
 
 class Eco extends DrivingMode
 {

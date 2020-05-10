@@ -1,14 +1,14 @@
 <?php
 
 
-namespace Mtk3d\Gearbox\Gearbox\Pedal\Specification\Sport;
+namespace Mtk3d\Gearbox\Gearbox\DrivingMode\Characteristics\Sport;
 
 
 use Mtk3d\Gearbox\Gearbox\Pedal\Pedal;
 use Mtk3d\Gearbox\Gearbox\Pedal\PedalThreshold;
 use Mtk3d\Gearbox\Gearbox\Pedal\Specification\PressedAboveSpecification;
 
-class KickdownInSportSpecification
+class AcceleratesSlightlyInSport
 {
     /**
      * @var PressedAboveSpecification
@@ -18,7 +18,7 @@ class KickdownInSportSpecification
     public function __construct()
     {
         $this->pressedAbove =
-            new PressedAboveSpecification(PedalThreshold::of(0.7));
+            new PressedAboveSpecification(PedalThreshold::of(0.5));
     }
 
     public function isSatisfiedBy(Pedal $pedal): bool

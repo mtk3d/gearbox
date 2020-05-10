@@ -3,20 +3,20 @@
 namespace Mtk3d\Gearbox\Gearbox\DrivingMode;
 
 
+use Mtk3d\Gearbox\Gearbox\DrivingMode\Characteristics\Sport\DownshiftInSportSpecification;
+use Mtk3d\Gearbox\Gearbox\DrivingMode\Characteristics\Sport\DownshiftOnBrakeInSportSpecification;
+use Mtk3d\Gearbox\Gearbox\DrivingMode\Characteristics\Sport\DownshiftOnKickdownInSportSpecification;
+use Mtk3d\Gearbox\Gearbox\DrivingMode\Characteristics\Sport\DownshiftOnStrongKickdownInSportSpecification;
+use Mtk3d\Gearbox\Gearbox\DrivingMode\Characteristics\Sport\KickdownInSportSpecification;
+use Mtk3d\Gearbox\Gearbox\DrivingMode\Characteristics\Sport\StrongKickdownInSportSpecification;
+use Mtk3d\Gearbox\Gearbox\DrivingMode\Characteristics\Sport\UpshiftInSportSpecification;
 use Mtk3d\Gearbox\Gearbox\ExternalSystemsInterface;
 use Mtk3d\Gearbox\Gearbox\GearboxInterface;
 use Mtk3d\Gearbox\Gearbox\InputState;
 use Mtk3d\Gearbox\Gearbox\Pedal\BreakPedal;
 use Mtk3d\Gearbox\Gearbox\Pedal\GasPedal;
 use Mtk3d\Gearbox\Gearbox\Pedal\Specification\PressedSpecification;
-use Mtk3d\Gearbox\Gearbox\Pedal\Specification\Sport\KickdownInSportSpecification;
-use Mtk3d\Gearbox\Gearbox\Pedal\Specification\Sport\StrongKickdownInSportSpecification;
 use Mtk3d\Gearbox\Gearbox\Rpm\Rpm;
-use Mtk3d\Gearbox\Gearbox\Rpm\Specification\Sport\DownshiftInSportSpecification;
-use Mtk3d\Gearbox\Gearbox\Rpm\Specification\Sport\DownshiftOnBrakeInSportSpecification;
-use Mtk3d\Gearbox\Gearbox\Rpm\Specification\Sport\DownshiftOnStrongKickdownInSportSpecification;
-use Mtk3d\Gearbox\Gearbox\Rpm\Specification\Sport\UpshiftInSportSpecification;
-use Mtk3d\Gearbox\Gearbox\Rpm\Specification\Sport\DownshiftOnKickdownInSportSpecification;
 
 class Sport extends DrivingMode
 {
@@ -36,10 +36,6 @@ class Sport extends DrivingMode
      * @var DownshiftOnBrakeInSportSpecification
      */
     private DownshiftOnBrakeInSportSpecification $downShiftOnBreakSpecification;
-    /**
-     * @var DownshiftOnKickdownInSportSpecification
-     */
-    private DownshiftOnKickdownInSportSpecification $upShiftInKickdownSpecification;
     /**
      * @var UpshiftInSportSpecification
      */

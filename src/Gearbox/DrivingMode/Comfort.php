@@ -2,13 +2,13 @@
 
 namespace Mtk3d\Gearbox\Gearbox\DrivingMode;
 
+use Mtk3d\Gearbox\Gearbox\DrivingMode\Characteristics\Comfort\DownshiftInComfortSpecification;
+use Mtk3d\Gearbox\Gearbox\DrivingMode\Characteristics\Comfort\DownshiftOnBrakeInComfortSpecification;
+use Mtk3d\Gearbox\Gearbox\DrivingMode\Characteristics\Comfort\KickdownInComfortSpecification;
+use Mtk3d\Gearbox\Gearbox\DrivingMode\Characteristics\Comfort\UpshiftInComfortSpecification;
+use Mtk3d\Gearbox\Gearbox\DrivingMode\Characteristics\Comfort\UpshiftOnKickdownInComfortSpecification;
 use Mtk3d\Gearbox\Gearbox\InputState;
-use Mtk3d\Gearbox\Gearbox\Pedal\Specification\Comfort\KickdownInComfortSpecification;
 use Mtk3d\Gearbox\Gearbox\Pedal\Specification\PressedSpecification;
-use Mtk3d\Gearbox\Gearbox\Rpm\Specification\Comfort\DownshiftInComfortSpecification;
-use Mtk3d\Gearbox\Gearbox\Rpm\Specification\Comfort\DownshiftOnBrakeInComfortSpecification;
-use Mtk3d\Gearbox\Gearbox\Rpm\Specification\Comfort\UpshiftOnKickdownInComfortSpecification;
-use Mtk3d\Gearbox\Gearbox\Rpm\Specification\Comfort\UpshiftInComfortSpecification;
 
 class Comfort extends DrivingMode
 {

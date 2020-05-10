@@ -1,12 +1,12 @@
 <?php
 
-namespace Mtk3d\Gearbox\Gearbox\Rpm\Specification\Comfort;
+namespace Mtk3d\Gearbox\Gearbox\DrivingMode\Characteristics\Comfort;
 
 use Mtk3d\Gearbox\Common\Specification;
 use Mtk3d\Gearbox\Gearbox\Rpm\Rpm;
 use Mtk3d\Gearbox\Gearbox\Rpm\Specification\RpmAboveSpecification;
 
-class UpshiftInComfortSpecification extends Specification
+class UpshiftOnKickdownInComfortSpecification extends Specification
 {
     /**
      * @var RpmAboveSpecification
@@ -16,7 +16,7 @@ class UpshiftInComfortSpecification extends Specification
     public function __construct()
     {
         $this->rpmAbove =
-            new RpmAboveSpecification(Rpm::of(2500));
+            new RpmAboveSpecification(Rpm::of(4500));
     }
 
     public function isSatisfiedBy(Rpm $rpm): bool

@@ -1,6 +1,6 @@
 <?php
 
-namespace Mtk3d\Gearbox\Gearbox\Rpm\Specification\Eco;
+namespace Mtk3d\Gearbox\Gearbox\DrivingMode\Characteristics\Eco;
 
 use Mtk3d\Gearbox\Common\Specification;
 use Mtk3d\Gearbox\Gearbox\Rpm\Rpm;

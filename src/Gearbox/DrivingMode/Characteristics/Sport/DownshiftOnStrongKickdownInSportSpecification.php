@@ -1,12 +1,12 @@
 <?php
 
-namespace Mtk3d\Gearbox\Gearbox\Rpm\Specification\Sport;
+namespace Mtk3d\Gearbox\Gearbox\DrivingMode\Characteristics\Sport;
 
 use Mtk3d\Gearbox\Common\Specification;
 use Mtk3d\Gearbox\Gearbox\Rpm\Rpm;
 use Mtk3d\Gearbox\Gearbox\Rpm\Specification\RpmBelowSpecification;
 
-class DownshiftOnKickdownInSportSpecification extends Specification
+class DownshiftOnStrongKickdownInSportSpecification extends Specification
 {
     /**
      * @var RpmBelowSpecification
