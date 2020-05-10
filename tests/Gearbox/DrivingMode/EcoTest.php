@@ -13,7 +13,7 @@ use PHPUnit\Framework\TestCase;
 //TODO: refactor tests to check gearbox function calls
 class EcoTest extends TestCase
 {
-    private $eco;
+    private Eco $eco;
 
     public function setUp(): void
     {

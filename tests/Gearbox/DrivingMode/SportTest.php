@@ -88,7 +88,7 @@ class SportTest extends TestCase
         $this->assertFalse($shouldNot);
     }
 
-    public function testShouldShiftDownInKickdown()
+    public function testShouldShiftDownInKickDown()
     {
         //given
         $inputStateShould = InputState::of(
@@ -113,7 +113,7 @@ class SportTest extends TestCase
         $this->assertFalse($shouldNotTwoGearsToo);
     }
 
-    public function testShouldShiftDownTwoGearsInKickdown()
+    public function testShouldShiftDownTwoGearsInKickDown()
     {
         //given
         $inputState = InputState::of(
@@ -129,7 +129,7 @@ class SportTest extends TestCase
         $this->assertTrue($twoGears);
     }
 
-    public function testChangeTwoGearsInKickdown()
+    public function testChangeTwoGearsInKickDown()
     {
         //given
         $externalSystems = $this->createMock(ExternalSystemsInterface::class);

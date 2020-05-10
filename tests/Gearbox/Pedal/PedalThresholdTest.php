@@ -25,6 +25,6 @@ class PedalThresholdTest extends TestCase
         //then
         $this->expectException(InvalidArgumentException::class);
         //when
-        $pedalThreshold = PedalThreshold::of($threshold);
+        PedalThreshold::of($threshold);
     }
 }

@@ -12,16 +12,17 @@ use Mtk3d\Gearbox\Gearbox\GearMode;
 use Mtk3d\Gearbox\Gearbox\Pedal\BreakPedal;
 use Mtk3d\Gearbox\Gearbox\Pedal\GasPedal;
 use Mtk3d\Gearbox\Gearbox\Rpm\Rpm;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class GearboxDriverTest extends TestCase
 {
     /**
-     * @var GearboxInterface|\PHPUnit\Framework\MockObject\MockObject
+     * @var GearboxInterface|MockObject
      */
     private $gearbox;
     /**
-     * @var ExternalSystemsInterface|\PHPUnit\Framework\MockObject\MockObject
+     * @var ExternalSystemsInterface|MockObject
      */
     private $externalSystems;
 

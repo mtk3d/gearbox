@@ -24,10 +24,6 @@ class GearboxDriver
      */
     private GearboxInterface $gearbox;
     /**
-     * @var GasPedal
-     */
-    private GasPedal $gas;
-    /**
      * @var BreakPedal
      */
     private BreakPedal $break;

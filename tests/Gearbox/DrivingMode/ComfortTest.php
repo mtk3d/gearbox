@@ -4,7 +4,6 @@ namespace Mtk3d\Gearbox\Tests\Gearbox\DrivingMode;
 
 use Mtk3d\Gearbox\Gearbox\DrivingMode\Aggressiveness\Aggressiveness;
 use Mtk3d\Gearbox\Gearbox\DrivingMode\Comfort;
-use Mtk3d\Gearbox\Gearbox\DrivingMode\Sport;
 use Mtk3d\Gearbox\Gearbox\InputState;
 use Mtk3d\Gearbox\Gearbox\Pedal\BreakPedal;
 use Mtk3d\Gearbox\Gearbox\Pedal\GasPedal;
@@ -87,7 +86,7 @@ class ComfortTest extends TestCase
         $this->assertFalse($shouldNot);
     }
 
-    public function testShouldShiftUpInKickdown()
+    public function testShouldShiftUpInKickDown()
     {
         //given
         $inputStateShould = InputState::of(

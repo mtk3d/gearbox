@@ -6,12 +6,13 @@ use Mtk3d\Gearbox\Gearbox\Gear;
 use Mtk3d\Gearbox\Gearbox\Gearbox;
 use Mtk3d\Gearbox\Gearbox\GearboxAdapter;
 use Mtk3d\Gearbox\Gearbox\GearMode;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class GearboxAdapterTest extends TestCase
 {
     /**
-     * @var Gearbox|\PHPUnit\Framework\MockObject\MockObject
+     * @var Gearbox|MockObject
      */
     private $gearboxMock;
 

@@ -25,6 +25,6 @@ class RpmTest extends TestCase
         //then
         $this->expectException(InvalidArgumentException::class);
         //when
-        $rpm = Rpm::of($value);
+        Rpm::of($value);
     }
 }
