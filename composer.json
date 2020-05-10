@@ -1,6 +1,8 @@
 {
     "name": "mtk3d/gearbox",
     "type": "project",
+    "description": "This project has been created as a exercise on the devupgrade.online competition",
+    "license": "MIT",
     "require-dev": {
         "phpunit/phpunit": "^9.1"
     },
