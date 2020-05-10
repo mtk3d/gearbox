@@ -3,14 +3,14 @@
 
 
 ## Characteristics table
-|  VALUE\MODE                            |     ECO     |   COMFORT   |   SPORT   |
-|:--------------------------------------:|:-----------:|:-----------:|:---------:|
-|  downshift                             |   1000RPM   |   1000RPM   |  1500RPM  |
-|  upshift                               |   2000RPM   |   2500RPM   |  5000RPM  |
-|  downshift on break                    |   1500RPM   |   2000RPM   |  3000RPM  |
-|  threshold no kickdown                 |      x      |     0.5     |     x     |
-|  threshold is lite acceleration        |      x      |      x      |    0.5    |
-|  threshold is lite kickdown            |      x      |      x      |    0.7    |
-|  threshold is strong kickdown          |      x      |      x      |   ?(0.9)  |
-|  downshift in kickdown                 |      x      |   4500RPM   |  5000RPM  |
-|  downshift 2 gears in strong kickdown  |      x      |      x      |  5000RPM  |
+|  VALUE\MODE                             |     ECO     |   COMFORT   |   SPORT   |
+|:---------------------------------------:|:-----------:|:-----------:|:---------:|
+|  Shift down                             |   1000RPM   |   1000RPM   |  1500RPM  |
+|  Shift up                               |   2000RPM   |   2500RPM   |  5000RPM  |
+|  Shift down on brake                    |   1500RPM   |   2000RPM   |  3000RPM  |
+|  Threshold on kick down                 |      x      |     0.5     |     x     |
+|  Threshold lite acceleration            |      x      |      x      |    0.5    |
+|  Threshold lite kickdown                |      x      |      x      |    0.7    |
+|  Threshold strong kickdown              |      x      |      x      |   ?(0.9)  |
+|  Shift down in kickdown                 |      x      |   4500RPM   |  5000RPM  |
+|  Shift down 2 gears in strong kick down |      x      |      x      |  5000RPM  |
