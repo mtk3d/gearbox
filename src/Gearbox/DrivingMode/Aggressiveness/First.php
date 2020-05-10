@@ -2,7 +2,12 @@
 
 namespace Mtk3d\Gearbox\Gearbox\DrivingMode\Aggressiveness;
 
-class First
-{
+use Mtk3d\Gearbox\Gearbox\Rpm\Rpm;
 
+class First implements AggressivenessInterface
+{
+    public function calculate(Rpm $rpm): Rpm
+    {
+        return $rpm;
+    }
 }

@@ -5,6 +5,7 @@ namespace Mtk3d\Gearbox\Gearbox;
 
 
 use Mtk3d\Gearbox\Common\Exception\InvalidArgumentException;
+use Mtk3d\Gearbox\Gearbox\DrivingMode\Aggressiveness\Aggressiveness;
 use Mtk3d\Gearbox\Gearbox\DrivingMode\Comfort;
 use Mtk3d\Gearbox\Gearbox\DrivingMode\DrivingMode;
 use Mtk3d\Gearbox\Gearbox\Exception\ActionSequenceException;
@@ -63,7 +64,7 @@ class GearboxDriver
         GearboxInterface $gearbox,
         ExternalSystemsInterface $externalSystems
     ) {
-        return new GearboxDriver($gearbox, $externalSystems, new Comfort());
+        return new GearboxDriver($gearbox, $externalSystems, new Comfort(Aggressiveness::first()));
     }
 
     /**

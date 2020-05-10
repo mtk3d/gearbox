@@ -3,6 +3,7 @@
 namespace Mtk3d\Gearbox\Gearbox\DrivingMode;
 
 
+use Mtk3d\Gearbox\Gearbox\DrivingMode\Aggressiveness\AggressivenessInterface;
 use Mtk3d\Gearbox\Gearbox\DrivingMode\Characteristics\Eco\DownshiftInEcoSpecification;
 use Mtk3d\Gearbox\Gearbox\DrivingMode\Characteristics\Eco\DownshiftOnBrakeInEcoSpecification;
 use Mtk3d\Gearbox\Gearbox\DrivingMode\Characteristics\Eco\UpshiftInEcoSpecification;
@@ -28,7 +29,7 @@ class Eco extends DrivingMode
      */
     private UpshiftInEcoSpecification $upShiftSpecification;
 
-    public function __construct()
+    public function __construct(AggressivenessInterface $aggressiveness)
     {
         $this->pressedSpecification = new PressedSpecification();
         $this->downShiftSpecification = new DownshiftInEcoSpecification();

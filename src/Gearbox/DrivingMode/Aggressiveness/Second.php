@@ -2,7 +2,12 @@
 
 namespace Mtk3d\Gearbox\Gearbox\DrivingMode\Aggressiveness;
 
-class Second
-{
+use Mtk3d\Gearbox\Gearbox\Rpm\Rpm;
 
+class Second implements AggressivenessInterface
+{
+    public function calculate(Rpm $rpm): Rpm
+    {
+        return Rpm::of($rpm->value() * 120/100);
+    }
 }

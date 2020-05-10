@@ -2,6 +2,7 @@
 
 namespace Mtk3d\Gearbox\Tests\Gearbox\DrivingMode;
 
+use Mtk3d\Gearbox\Gearbox\DrivingMode\Aggressiveness\Aggressiveness;
 use Mtk3d\Gearbox\Gearbox\DrivingMode\Eco;
 use Mtk3d\Gearbox\Gearbox\InputState;
 use Mtk3d\Gearbox\Gearbox\Pedal\BreakPedal;
@@ -16,7 +17,7 @@ class EcoTest extends TestCase
 
     public function setUp(): void
     {
-        $this->eco = new Eco();
+        $this->eco = new Eco(Aggressiveness::first());
     }
 
     public function testShouldShiftDown()

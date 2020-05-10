@@ -3,6 +3,7 @@
 namespace Mtk3d\Gearbox\Gearbox\DrivingMode;
 
 
+use Mtk3d\Gearbox\Gearbox\DrivingMode\Aggressiveness\AggressivenessInterface;
 use Mtk3d\Gearbox\Gearbox\DrivingMode\Characteristics\Sport\DownshiftInSportSpecification;
 use Mtk3d\Gearbox\Gearbox\DrivingMode\Characteristics\Sport\DownshiftOnBrakeInSportSpecification;
 use Mtk3d\Gearbox\Gearbox\DrivingMode\Characteristics\Sport\DownshiftOnKickdownInSportSpecification;
@@ -53,16 +54,16 @@ class Sport extends DrivingMode
      */
     private DownshiftOnStrongKickdownInSportSpecification $downShiftOnStrongKickdownSpecification;
 
-    public function __construct()
+    public function __construct(AggressivenessInterface $aggressiveness)
     {
         $this->pressedSpecification = new PressedSpecification();
         $this->kickDownSpecification = new KickdownInSportSpecification();
-        $this->downShiftSpecification = new DownshiftInSportSpecification();
-        $this->downShiftOnBreakSpecification = new DownshiftOnBrakeInSportSpecification();
-        $this->downShiftInKickdownSpecification = new DownshiftOnKickdownInSportSpecification();
-        $this->upShiftSpecification = new UpshiftInSportSpecification();
+        $this->downShiftSpecification = new DownshiftInSportSpecification($aggressiveness);
+        $this->downShiftOnBreakSpecification = new DownshiftOnBrakeInSportSpecification($aggressiveness);
+        $this->downShiftInKickdownSpecification = new DownshiftOnKickdownInSportSpecification($aggressiveness);
+        $this->upShiftSpecification = new UpshiftInSportSpecification($aggressiveness);
         $this->strongKickdownSpecification = new StrongKickdownInSportSpecification();
-        $this->downShiftOnStrongKickdownSpecification = new DownshiftOnStrongKickdownInSportSpecification();
+        $this->downShiftOnStrongKickdownSpecification = new DownshiftOnStrongKickdownInSportSpecification($aggressiveness);
     }
 
     public function handle(GasPedal $gas, BreakPedal $break, GearboxInterface $gearbox, ExternalSystemsInterface $externalSystems): void

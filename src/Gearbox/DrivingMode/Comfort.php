@@ -2,6 +2,7 @@
 
 namespace Mtk3d\Gearbox\Gearbox\DrivingMode;
 
+use Mtk3d\Gearbox\Gearbox\DrivingMode\Aggressiveness\AggressivenessInterface;
 use Mtk3d\Gearbox\Gearbox\DrivingMode\Characteristics\Comfort\DownshiftInComfortSpecification;
 use Mtk3d\Gearbox\Gearbox\DrivingMode\Characteristics\Comfort\DownshiftOnBrakeInComfortSpecification;
 use Mtk3d\Gearbox\Gearbox\DrivingMode\Characteristics\Comfort\KickdownInComfortSpecification;
@@ -37,14 +38,14 @@ class Comfort extends DrivingMode
      */
     private UpshiftInComfortSpecification $upShiftSpecification;
 
-    public function __construct()
+    public function __construct(AggressivenessInterface $aggressiveness)
     {
         $this->pressedSpecification = new PressedSpecification();
         $this->kickDownSpecification = new KickdownInComfortSpecification();
-        $this->downShiftSpecification = new DownshiftInComfortSpecification();
-        $this->downShiftOnBreakSpecification = new DownshiftOnBrakeInComfortSpecification();
-        $this->upShiftInKickdownSpecification = new UpshiftOnKickdownInComfortSpecification();
-        $this->upShiftSpecification = new UpshiftInComfortSpecification();
+        $this->downShiftSpecification = new DownshiftInComfortSpecification($aggressiveness);
+        $this->downShiftOnBreakSpecification = new DownshiftOnBrakeInComfortSpecification($aggressiveness);
+        $this->upShiftInKickdownSpecification = new UpshiftOnKickdownInComfortSpecification($aggressiveness);
+        $this->upShiftSpecification = new UpshiftInComfortSpecification($aggressiveness);
     }
 
     public function shouldShiftDown(InputState $inputState): bool

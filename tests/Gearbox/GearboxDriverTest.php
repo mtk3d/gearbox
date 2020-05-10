@@ -2,6 +2,7 @@
 
 namespace Mtk3d\Gearbox\Tests\Gearbox;
 
+use Mtk3d\Gearbox\Gearbox\DrivingMode\Aggressiveness\Aggressiveness;
 use Mtk3d\Gearbox\Gearbox\DrivingMode\Sport;
 use Mtk3d\Gearbox\Gearbox\Exception\ActionSequenceException;
 use Mtk3d\Gearbox\Gearbox\ExternalSystemsInterface;
@@ -47,7 +48,7 @@ class GearboxDriverTest extends TestCase
         $this->externalSystems->method('getCurrentRpm')->willReturn(Rpm::of(4900));
         $this->gearbox->expects($this->exactly(2))->method('shiftDown');
         //when
-        $gearboxDriver->changeDrivingMode(new Sport());
+        $gearboxDriver->changeDrivingMode(new Sport(Aggressiveness::first()));
         $gearboxDriver->handle(GasPedal::of(0), BreakPedal::of(0.95));
     }
 

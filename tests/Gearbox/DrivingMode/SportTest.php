@@ -2,6 +2,7 @@
 
 namespace Mtk3d\Gearbox\Tests\Gearbox\DrivingMode;
 
+use Mtk3d\Gearbox\Gearbox\DrivingMode\Aggressiveness\Aggressiveness;
 use Mtk3d\Gearbox\Gearbox\DrivingMode\Sport;
 use Mtk3d\Gearbox\Gearbox\ExternalSystemsInterface;
 use Mtk3d\Gearbox\Gearbox\GearboxInterface;
@@ -21,7 +22,7 @@ class SportTest extends TestCase
 
     public function setUp(): void
     {
-        $this->sport = new Sport();
+        $this->sport = new Sport(Aggressiveness::first());
     }
 
     public function testShouldShiftDown()
@@ -138,5 +139,49 @@ class SportTest extends TestCase
             ->method('shiftDown');
         //when
         $this->sport->handle(GasPedal::of(0), BreakPedal::of(0.95), $gearbox, $externalSystems);
+    }
+
+    public function testShouldShiftDownInSecondAggressiveness()
+    {
+        $this->sport = new Sport(Aggressiveness::second());
+        //given
+        $inputStateShould = InputState::of(
+            GasPedal::of(0.5),
+            BreakPedal::of(0),
+            Rpm::of(1700)
+        );
+        $inputStateShouldNot = InputState::of(
+            GasPedal::of(0.5),
+            BreakPedal::of(0),
+            Rpm::of(1900)
+        );
+        //when
+        $should = $this->sport->shouldShiftDown($inputStateShould);
+        $shouldNot = $this->sport->shouldShiftDown($inputStateShouldNot);
+        //then
+        $this->assertTrue($should);
+        $this->assertFalse($shouldNot);
+    }
+
+    public function testShouldShiftDownInThirdAggressiveness()
+    {
+        $this->sport = new Sport(Aggressiveness::third());
+        //given
+        $inputStateShould = InputState::of(
+            GasPedal::of(0.5),
+            BreakPedal::of(0),
+            Rpm::of(1700)
+        );
+        $inputStateShouldNot = InputState::of(
+            GasPedal::of(0.5),
+            BreakPedal::of(0),
+            Rpm::of(1900)
+        );
+        //when
+        $should = $this->sport->shouldShiftDown($inputStateShould);
+        $shouldNot = $this->sport->shouldShiftDown($inputStateShouldNot);
+        //then
+        $this->assertTrue($should);
+        $this->assertFalse($shouldNot);
     }
 }

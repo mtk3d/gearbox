@@ -3,6 +3,7 @@
 namespace Mtk3d\Gearbox\Gearbox\DrivingMode\Characteristics\Comfort;
 
 use Mtk3d\Gearbox\Common\Specification;
+use Mtk3d\Gearbox\Gearbox\DrivingMode\Aggressiveness\AggressivenessInterface;
 use Mtk3d\Gearbox\Gearbox\Rpm\Rpm;
 use Mtk3d\Gearbox\Gearbox\Rpm\Specification\RpmAboveSpecification;
 
@@ -13,10 +14,12 @@ class UpshiftOnKickdownInComfortSpecification extends Specification
      */
     private RpmAboveSpecification $rpmAbove;
 
-    public function __construct()
+    public function __construct(AggressivenessInterface $aggressiveness)
     {
+        $rpm = $aggressiveness->calculate(Rpm::of(4500));
+
         $this->rpmAbove =
-            new RpmAboveSpecification(Rpm::of(4500));
+            new RpmAboveSpecification($rpm);
     }
 
     public function isSatisfiedBy(Rpm $rpm): bool

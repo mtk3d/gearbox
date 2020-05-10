@@ -1,11 +1,11 @@
 <?php
 
+namespace Mtk3d\Gearbox\Gearbox\DrivingMode\Aggressiveness;
 
-namespace Mtk3d\Gearbox\Gearbox\DrivingMode;
 
+use Mtk3d\Gearbox\Gearbox\Rpm\Rpm;
 
 interface AggressivenessInterface
 {
-    public function calculateAbove();
-    public function calculateBelow();
+    public function calculate(Rpm $rpm): Rpm;
 }

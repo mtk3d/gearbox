@@ -2,6 +2,7 @@
 
 namespace Mtk3d\Gearbox\Tests\Gearbox\DrivingMode;
 
+use Mtk3d\Gearbox\Gearbox\DrivingMode\Aggressiveness\Aggressiveness;
 use Mtk3d\Gearbox\Gearbox\DrivingMode\Comfort;
 use Mtk3d\Gearbox\Gearbox\InputState;
 use Mtk3d\Gearbox\Gearbox\Pedal\BreakPedal;
@@ -19,7 +20,7 @@ class ComfortTest extends TestCase
 
     public function setUp(): void
     {
-        $this->comfort = new Comfort();
+        $this->comfort = new Comfort(Aggressiveness::first());
     }
 
     public function testShouldShiftDown()
@@ -101,6 +102,50 @@ class ComfortTest extends TestCase
         //when
         $should = $this->comfort->shouldShiftUp($inputStateShould);
         $shouldNot = $this->comfort->shouldShiftUp($inputStateShouldNot);
+        //then
+        $this->assertTrue($should);
+        $this->assertFalse($shouldNot);
+    }
+
+    public function testShouldShiftDownOnSecondAggressiveness()
+    {
+        $this->comfort = new Comfort(Aggressiveness::second());
+        //given
+        $inputStateShould = InputState::of(
+            GasPedal::of(0.5),
+            BreakPedal::of(0),
+            Rpm::of(1199)
+        );
+        $inputStateShouldNot = InputState::of(
+            GasPedal::of(0.5),
+            BreakPedal::of(0),
+            Rpm::of(1201)
+        );
+        //when
+        $should = $this->comfort->shouldShiftDown($inputStateShould);
+        $shouldNot = $this->comfort->shouldShiftDown($inputStateShouldNot);
+        //then
+        $this->assertTrue($should);
+        $this->assertFalse($shouldNot);
+    }
+
+    public function testShouldShiftDownOnThirdAggressiveness()
+    {
+        $this->comfort = new Comfort(Aggressiveness::third());
+        //given
+        $inputStateShould = InputState::of(
+            GasPedal::of(0.5),
+            BreakPedal::of(0),
+            Rpm::of(1199)
+        );
+        $inputStateShouldNot = InputState::of(
+            GasPedal::of(0.5),
+            BreakPedal::of(0),
+            Rpm::of(1201)
+        );
+        //when
+        $should = $this->comfort->shouldShiftDown($inputStateShould);
+        $shouldNot = $this->comfort->shouldShiftDown($inputStateShouldNot);
         //then
         $this->assertTrue($should);
         $this->assertFalse($shouldNot);
