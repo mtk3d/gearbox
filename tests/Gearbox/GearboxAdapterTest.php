@@ -2,9 +2,9 @@
 
 namespace Mtk3d\Gearbox\Gearbox\Tests;
 
+use Mtk3d\Gearbox\ExternalSystems\Gearbox;
 use Mtk3d\Gearbox\Gearbox\Exception\GearOutOfRangeException;
 use Mtk3d\Gearbox\Gearbox\Gear;
-use Mtk3d\Gearbox\Gearbox\Gearbox;
 use Mtk3d\Gearbox\Gearbox\GearboxAdapter;
 use Mtk3d\Gearbox\Gearbox\GearMode;
 use PHPUnit\Framework\MockObject\MockObject;

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Mtk3d\Gearbox\Gearbox;
+namespace Mtk3d\Gearbox\ExternalSystems;
 
 /**
  * Class Gearbox

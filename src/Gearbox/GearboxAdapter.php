@@ -4,6 +4,7 @@
 namespace Mtk3d\Gearbox\Gearbox;
 
 
+use Mtk3d\Gearbox\ExternalSystems\Gearbox;
 use Mtk3d\Gearbox\Gearbox\Exception\GearOutOfRangeException;
 
 class GearboxAdapter implements GearboxInterface
