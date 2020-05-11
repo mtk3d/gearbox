@@ -12,11 +12,19 @@ class RpmBelowSpecification extends Specification
      */
     private Rpm $rpm;
 
+    /**
+     * RpmBelowSpecification constructor.
+     * @param Rpm $rpm
+     */
     public function __construct(Rpm $rpm)
     {
         $this->rpm = $rpm;
     }
 
+    /**
+     * @param Rpm $rpm
+     * @return bool
+     */
     public function isSatisfiedBy(Rpm $rpm): bool
     {
         return $rpm->value() < $this->rpm->value();

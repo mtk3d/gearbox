@@ -3,6 +3,7 @@
 namespace Mtk3d\Gearbox\Gearbox\DrivingMode;
 
 
+use Mtk3d\Gearbox\Common\Exception\InvalidArgumentException;
 use Mtk3d\Gearbox\Gearbox\DrivingMode\Aggressiveness\AggressivenessInterface;
 use Mtk3d\Gearbox\Gearbox\DrivingMode\Characteristics\Sport\ShiftDownInSport;
 use Mtk3d\Gearbox\Gearbox\DrivingMode\Characteristics\Sport\ShiftDownOnBrakeInSport;
@@ -57,6 +58,7 @@ class Sport extends DrivingMode
     /**
      * Sport constructor.
      * @param AggressivenessInterface $aggressiveness
+     * @throws InvalidArgumentException
      */
     public function __construct(AggressivenessInterface $aggressiveness)
     {

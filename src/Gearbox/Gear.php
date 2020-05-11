@@ -5,6 +5,7 @@ namespace Mtk3d\Gearbox\Gearbox;
 
 
 use Mtk3d\Gearbox\Common\Exception\InvalidArgumentException;
+use Mtk3d\Gearbox\Gearbox\Exception\GearOutOfRangeException;
 
 class Gear
 {
@@ -25,25 +26,15 @@ class Gear
     /**
      * @param int $gear
      * @return Gear
-     * @throws InvalidArgumentException
+     * @throws GearOutOfRangeException
      */
     public static function of(int $gear): Gear
     {
         if ($gear < 1) {
-            throw new InvalidArgumentException("Gear number shouldn't be less than 1");
+            throw new GearOutOfRangeException("Gear number shouldn't be less than 1");
         }
 
         return new Gear($gear);
-    }
-
-    /**
-     * @param int $gear
-     * @return Gear
-     * @throws InvalidArgumentException
-     */
-    public function change(int $gear): Gear
-    {
-        return Gear::of($gear);
     }
 
     /**
@@ -52,20 +43,5 @@ class Gear
     public function current(): int
     {
         return $this->gear;
-    }
-
-    public function shiftDown(): Gear
-    {
-        try {
-            $gear = Gear::of($this->current() - 1);
-        } catch (InvalidArgumentException $e) {
-            return $this;
-        }
-        return $gear;
-    }
-
-    public function shiftUp(): Gear
-    {
-        return Gear::of($this->current() + 1);
     }
 }

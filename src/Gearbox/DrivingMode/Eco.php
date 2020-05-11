@@ -3,6 +3,7 @@
 namespace Mtk3d\Gearbox\Gearbox\DrivingMode;
 
 
+use Mtk3d\Gearbox\Common\Exception\InvalidArgumentException;
 use Mtk3d\Gearbox\Gearbox\DrivingMode\Aggressiveness\AggressivenessInterface;
 use Mtk3d\Gearbox\Gearbox\DrivingMode\Characteristics\Eco\ShiftDownInEco;
 use Mtk3d\Gearbox\Gearbox\DrivingMode\Characteristics\Eco\ShiftDownOnBrakeInEco;
@@ -32,6 +33,7 @@ class Eco extends DrivingMode
     /**
      * Eco constructor.
      * @param AggressivenessInterface $aggressiveness
+     * @throws InvalidArgumentException
      */
     public function __construct(AggressivenessInterface $aggressiveness)
     {

@@ -15,11 +15,19 @@ class PressedAboveSpecification extends Specification
      */
     private PedalThreshold $threshold;
 
+    /**
+     * PressedAboveSpecification constructor.
+     * @param PedalThreshold $threshold
+     */
     public function __construct(PedalThreshold $threshold)
     {
         $this->threshold = $threshold;
     }
 
+    /**
+     * @param Pedal $pedal
+     * @return bool
+     */
     public function isSatisfiedBy(Pedal $pedal): bool
     {
         return $pedal->threshold()->value() > $this->threshold->value();

@@ -3,6 +3,7 @@
 namespace Mtk3d\Gearbox\Gearbox\Tests;
 
 use Mtk3d\Gearbox\Common\Exception\InvalidArgumentException;
+use Mtk3d\Gearbox\Gearbox\Exception\GearOutOfRangeException;
 use Mtk3d\Gearbox\Gearbox\Gear;
 use PHPUnit\Framework\TestCase;
 
@@ -18,33 +19,20 @@ class GearTest extends TestCase
         $this->gear = Gear::of(1);
     }
 
-    public function testChangeGear()
+    public function testCreateGearOfValue()
     {
-        //given $this->gear
-        //when
-        $gear = $this->gear->change(3);
+        //given
+        $gear = Gear::of(5);
         //then
-        $this->assertEquals(3, $gear->current());
+        $this->assertEquals(5, $gear->current());
     }
 
     public function testSetGearOutOfRange()
     {
-        //given $this->gear
+        //given
         //then
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(GearOutOfRangeException::class);
         //when
-        $this->gear->change(-1);
-    }
-
-    public function testShiftDownOnLowestGear()
-    {
-        //given $this->gear
-        //when
-        $this->gear->change(2);
-        $this->gear->shiftDown();
-        $this->gear->shiftDown();
-        $this->gear->shiftDown();
-        //then
-        $this->assertEquals(1, $this->gear->current());
+        Gear::of(-1);
     }
 }

@@ -84,6 +84,7 @@ class GearboxDriver
     /**
      * @param GearMode $gearMode
      * @throws ActionSequenceException
+     * @throws InvalidArgumentException
      */
     public function changeGearMode(GearMode $gearMode): void
     {
@@ -95,5 +96,13 @@ class GearboxDriver
         }
 
         $this->gearbox->changeGearMode($gearMode);
+    }
+
+    /**
+     * @param Gear $newGear
+     */
+    public function changeGear(Gear $newGear)
+    {
+        $this->gearbox->changeGear($newGear);
     }
 }

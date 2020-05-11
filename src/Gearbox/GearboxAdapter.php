@@ -4,7 +4,7 @@
 namespace Mtk3d\Gearbox\Gearbox;
 
 
-use Mtk3d\Gearbox\Common\Exception\InvalidArgumentException;
+use Mtk3d\Gearbox\Gearbox\Exception\GearOutOfRangeException;
 
 class GearboxAdapter implements GearboxInterface
 {
@@ -25,6 +25,13 @@ class GearboxAdapter implements GearboxInterface
      */
     private Gear $maxGear;
 
+    /**
+     * GearboxAdapter constructor.
+     * @param Gearbox $gearbox
+     * @param Gear $gear
+     * @param GearMode $gearMode
+     * @param Gear $maxGear
+     */
     public function __construct(
         Gearbox $gearbox,
         Gear $gear,
@@ -41,7 +48,7 @@ class GearboxAdapter implements GearboxInterface
     /**
      * @param Gear $maxGear
      * @return GearboxAdapter
-     * @throws InvalidArgumentException
+     * @throws GearOutOfRangeException
      */
     public static function init(Gear $maxGear): GearboxAdapter
     {
@@ -64,9 +71,13 @@ class GearboxAdapter implements GearboxInterface
 
     /**
      * @param Gear $gear
+     * @throws GearOutOfRangeException
      */
     public function changeGear(Gear $gear): void
     {
+        if ($gear->current() > $this->maxGear->current()) {
+            throw new GearOutOfRangeException();
+        }
         $this->gear = $gear;
         $this->updateGearbox();
     }
@@ -80,19 +91,22 @@ class GearboxAdapter implements GearboxInterface
         return $this->gearMode->equals($gearMode);
     }
 
+    /**
+     * @throws GearOutOfRangeException
+     */
     public function shiftDown(): void
     {
-        $this->gear = $this->gear->shiftDown();
-        $this->updateGearbox();
+        $down = Gear::of($this->gear->current() - 1);
+        $this->changeGear($down);
     }
 
+    /**
+     * @throws GearOutOfRangeException
+     */
     public function shiftUp(): void
     {
-        if ($this->gear->current() >= $this->gearbox->getMaxDrive()) {
-            return;
-        }
-        $this->gear = $this->gear->shiftUp();
-        $this->updateGearbox();
+        $up = Gear::of($this->gear->current() + 1);
+        $this->changeGear($up);
     }
 
     /**

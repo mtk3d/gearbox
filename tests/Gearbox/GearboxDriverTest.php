@@ -5,7 +5,9 @@ namespace Mtk3d\Gearbox\Tests\Gearbox;
 use Mtk3d\Gearbox\Gearbox\DrivingMode\Aggressiveness\Aggressiveness;
 use Mtk3d\Gearbox\Gearbox\DrivingMode\Sport;
 use Mtk3d\Gearbox\Gearbox\Exception\ActionSequenceException;
+use Mtk3d\Gearbox\Gearbox\Exception\GearOutOfRangeException;
 use Mtk3d\Gearbox\Gearbox\ExternalSystemsInterface;
+use Mtk3d\Gearbox\Gearbox\Gear;
 use Mtk3d\Gearbox\Gearbox\GearboxDriver;
 use Mtk3d\Gearbox\Gearbox\GearboxInterface;
 use Mtk3d\Gearbox\Gearbox\GearMode;
@@ -82,5 +84,30 @@ class GearboxDriverTest extends TestCase
         $this->expectException(ActionSequenceException::class);
         //when
         $gearboxDriver->changeGearMode($park);
+    }
+
+    public function testManualyChangeGear() {
+        //given
+        $newGear = Gear::of(4);
+        $gearboxDriver = GearboxDriver::init($this->gearbox, $this->externalSystems);
+        //then
+        $this->gearbox->expects($this->once())->method('changeGear')->with($newGear);
+        //when
+        $gearboxDriver->changeGear($newGear);
+    }
+
+    public function testManualyChangeGearOutOfRange() {
+        //given
+        $newGear = Gear::of(4);
+        $gearboxDriver = GearboxDriver::init($this->gearbox, $this->externalSystems);
+        //then
+        $this->gearbox
+            ->expects($this->once())
+            ->method('changeGear')
+            ->with($newGear)
+            ->willThrowException(new GearOutOfRangeException);
+        $this->expectException(GearOutOfRangeException::class);
+        //when
+        $gearboxDriver->changeGear($newGear);
     }
 }

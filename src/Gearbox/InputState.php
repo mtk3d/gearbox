@@ -30,6 +30,12 @@ class InputState
         $this->currentRpm = $currentRpm;
     }
 
+    /**
+     * @param GasPedal $gas
+     * @param BreakPedal $break
+     * @param Rpm $currentRpm
+     * @return InputState
+     */
     public static function of(GasPedal $gas, BreakPedal $break, Rpm $currentRpm): InputState
     {
         return new InputState($gas, $break, $currentRpm);

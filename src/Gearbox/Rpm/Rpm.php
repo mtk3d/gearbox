@@ -11,6 +11,10 @@ class Rpm
      */
     private int $value;
 
+    /**
+     * Rpm constructor.
+     * @param int $value
+     */
     private function __construct(int $value)
     {
         $this->value = $value;
@@ -30,6 +34,9 @@ class Rpm
         return new Rpm($value);
     }
 
+    /**
+     * @return int
+     */
     public function value(): int
     {
         return $this->value;

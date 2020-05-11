@@ -13,6 +13,10 @@ class PedalThreshold
      */
     private float $value;
 
+    /**
+     * PedalThreshold constructor.
+     * @param float $value
+     */
     private function __construct(float $value)
     {
         $this->value = $value;

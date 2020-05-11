@@ -2,6 +2,7 @@
 
 namespace Mtk3d\Gearbox\Gearbox\Tests;
 
+use Mtk3d\Gearbox\Gearbox\Exception\GearOutOfRangeException;
 use Mtk3d\Gearbox\Gearbox\Gear;
 use Mtk3d\Gearbox\Gearbox\Gearbox;
 use Mtk3d\Gearbox\Gearbox\GearboxAdapter;
@@ -43,6 +44,18 @@ class GearboxAdapterTest extends TestCase
         $gearboxAdapter->changeGear(Gear::of(2));
     }
 
+    public function testGearboxSetGearOutOfRange()
+    {
+        //given
+        $gearboxAdapter = new GearboxAdapter($this->gearboxMock, Gear::of(1), GearMode::neutral(), Gear::of(2));
+        //then
+        $this->gearboxMock->expects($this->never())
+            ->method('setGearBoxCurrentParams');
+        $this->expectException(GearOutOfRangeException::class);
+        //when
+        $gearboxAdapter->changeGear(Gear::of(3));
+    }
+
     public function testGearboxAdapterShiftUp()
     {
         //given
@@ -62,6 +75,7 @@ class GearboxAdapterTest extends TestCase
         //then
         $this->gearboxMock->expects($this->never())
             ->method('setGearBoxCurrentParams');
+        $this->expectException(GearOutOfRangeException::class);
         //when
         $gearboxAdapter->shiftUp();
     }
