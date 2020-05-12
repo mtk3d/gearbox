@@ -37,17 +37,18 @@ class GearboxDriver
      * @param GearboxInterface $gearbox
      * @param ExternalSystemsInterface $externalSystems
      * @param DrivingMode $drivingMode
-     * @throws InvalidArgumentException
+     * @param BreakPedal $break
      */
     public function __construct(
         GearboxInterface $gearbox,
         ExternalSystemsInterface $externalSystems,
-        DrivingMode $drivingMode
+        DrivingMode $drivingMode,
+        BreakPedal $break
     ) {
         $this->externalSystems = $externalSystems;
         $this->gearbox = $gearbox;
         $this->drivingMode = $drivingMode;
-        $this->break = BreakPedal::of(0);
+        $this->break = $break;
     }
 
     /**
@@ -60,7 +61,12 @@ class GearboxDriver
         GearboxInterface $gearbox,
         ExternalSystemsInterface $externalSystems
     ) {
-        return new GearboxDriver($gearbox, $externalSystems, new Comfort(Aggressiveness::first()));
+        return new GearboxDriver(
+            $gearbox,
+            $externalSystems,
+            new Comfort(Aggressiveness::first()),
+            BreakPedal::of(0)
+        );
     }
 
     /**

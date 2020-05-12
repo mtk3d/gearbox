@@ -3,6 +3,7 @@
 namespace Mtk3d\Gearbox\Tests\Gearbox;
 
 use Mtk3d\Gearbox\Gearbox\DrivingMode\Aggressiveness\Aggressiveness;
+use Mtk3d\Gearbox\Gearbox\DrivingMode\Manual;
 use Mtk3d\Gearbox\Gearbox\DrivingMode\Sport;
 use Mtk3d\Gearbox\Gearbox\Exception\ActionSequenceException;
 use Mtk3d\Gearbox\Gearbox\Exception\GearOutOfRangeException;
@@ -109,5 +110,16 @@ class GearboxDriverTest extends TestCase
         $this->expectException(GearOutOfRangeException::class);
         //when
         $gearboxDriver->changeGear($newGear);
+    }
+
+    public function testManualGearboxMode() {
+        //given
+        $gearboxDriver = GearboxDriver::init($this->gearbox, $this->externalSystems);
+        //then
+        $this->externalSystems->method('getCurrentRpm')->willReturn(Rpm::of(900));
+        $this->gearbox->expects($this->never())->method('shiftDown');
+        //when
+        $gearboxDriver->changeDrivingMode(new Manual());
+        $gearboxDriver->handle(GasPedal::of(0.5), BreakPedal::of(0));
     }
 }
